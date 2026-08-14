@@ -1,0 +1,19 @@
+services:
+
+  backend:
+    build:
+      context: ../backend
+    container_name: task-manager-backend
+    ports:
+      - "5000:5000"
+    env_file:
+      - ../backend/.env
+
+  frontend:
+    build:
+      context: ../frontend
+    container_name: task-manager-frontend
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend

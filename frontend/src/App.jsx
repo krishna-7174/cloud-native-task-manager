@@ -10,17 +10,14 @@ function App() {
   const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
-    fetchTasks();
+    API.get("/tasks")
+      .then((response) => {
+        setTasks(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching tasks:", error);
+      });
   }, []);
-
-  const fetchTasks = async () => {
-    try {
-      const response = await API.get("/tasks");
-      setTasks(response.data);
-    } catch (error) {
-      console.error("Error fetching tasks:", error);
-    }
-  };
 
   const handleTaskAdded = (newTask) => {
     setTasks((previousTasks) => [...previousTasks, newTask]);

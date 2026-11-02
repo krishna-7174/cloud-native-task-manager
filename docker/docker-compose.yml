@@ -1,5 +1,4 @@
 services:
-
   backend:
     build:
       context: ../backend
@@ -15,5 +14,7 @@ services:
     container_name: task-manager-frontend
     ports:
       - "5173:80"
+    environment:
+      BACKEND_URL: backend:5000
     depends_on:
       - backend

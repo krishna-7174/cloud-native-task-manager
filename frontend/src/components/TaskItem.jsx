@@ -1,11 +1,9 @@
 import API from "../services/api";
 
 function TaskItem({ task, onTaskDeleted, onTaskUpdated }) {
-
   const handleDelete = async () => {
     try {
       await API.delete(`/tasks/${task._id}`);
-
       onTaskDeleted(task._id);
     } catch (error) {
       console.error("Error deleting task:", error);
@@ -25,26 +23,31 @@ function TaskItem({ task, onTaskDeleted, onTaskUpdated }) {
   };
 
   return (
-    <div className={`task-item ${task.completed ? "completed" : ""}`}>
+    <article className={`task-item ${task.completed ? "completed" : ""}`}>
+      <label className="task-checkbox">
+        <input
+          type="checkbox"
+          checked={task.completed}
+          onChange={handleToggle}
+          aria-label={`Mark "${task.title}" as ${
+            task.completed ? "incomplete" : "complete"
+          }`}
+        />
+        <span aria-hidden="true" />
+      </label>
 
-      <input
-        type="checkbox"
-        checked={task.completed}
-        onChange={handleToggle}
-      />
-
-      <span className="task-title">
-        {task.title}
-      </span>
+      <span className="task-title">{task.title}</span>
 
       <button
         className="delete-button"
+        type="button"
         onClick={handleDelete}
+        aria-label={`Delete "${task.title}"`}
+        title="Delete task"
       >
-        🗑️
+        &times;
       </button>
-
-    </div>
+    </article>
   );
 }
 
